@@ -69,3 +69,44 @@ Set IP address 192.168.1.100 with netmask 255.255.255.0 and router address 192.1
 Use Google's DNS servers:
 
     networksetup -setdnsservers en0 8.8.8.8 8.8.4.4
+
+### Examples
+
+#### Example .gitlab-ci.yml for native iOS apps
+
+```yaml
+stages:
+  - build
+
+build_project:
+  stage: build
+  script:
+    - carthage update --platform iOS
+    - ~/ios-tools/recreate-user-schemes.sh "MyAwesomeApp"
+    - xcodebuild clean archive -archivePath build/App -project MyAwesomeApp.xcodeproj -scheme "MyAwesomeApp" | xcpretty
+    - sigh download_all --team_id A1B2C3D4E5 --username user@domain.com --force
+    - xcodebuild -configuration Release -exportArchive -exportFormat ipa -archivePath "build/App.xcarchive" -exportPath "build/App.ipa" -exportProvisioningProfile "com.example.myawesomeapp AdHoc"
+    - ~/ios-tools/publish-betatesting.sh build/App.ipa "#my-awesome-app"
+  tags:
+    - ios
+  only:
+    - master
+```
+
+#### Example .gitlab-ci.yml for Titanium iOS apps
+
+```yaml
+stages:
+  - build
+
+build_project:
+  stage: build
+  script:
+    - ~/ios-tools/titanium-reset-appc.sh ./tiapp.xml
+    - ti build --platform ios --target dist-adhoc --distribution-name "Company TLD (A1B2C3D4E5)" --pp-uuid "`~/ios-tools/get_uuid.sh AdHoc_com.example.myawesomeapp`" -O ./dist
+    - ~/ios-tools/publish-betatesting.sh dist/MyAwesomeApp.ipa "#my-awesome-app"
+  tags:
+    - ios
+  only:
+    - master
+```
