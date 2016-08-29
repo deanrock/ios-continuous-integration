@@ -46,15 +46,29 @@ to ~/.profile
 
     ln -s /Applications/Xcode.app/Contents/Applications/Application\ Loader.app/Contents/itms/ /usr/local/itms
 
-8.) Titanium pre-requirements (titanium needs node 4.x):
 
-    brew install homebrew/versions/node4-lts
-    sudo npm install -g grunt-cli titanium alloy appcelerator tisdk
-    
-    #java
-    brew tap caskroom/cask
-    brew install Caskroom/cask/java
+### Setting up Titanium/Appcelerator
 
+1.) Install pre-requirements:
+
+```bash
+brew install homebrew/versions/node4-lts
+
+#java
+brew tap caskroom/cask
+brew install Caskroom/cask/java
+```
+
+2.) Install CLI tools:
+
+```bash
+sudo npm install -g grunt-cli titanium alloy appcelerator tisdk
+```
+
+3.) Set-up appcelerator and install latest titanium SDK (warning - requires interaction):
+```bash
+appc setup
+```
 
 ### Setting up static networking
 
