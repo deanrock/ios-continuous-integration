@@ -47,6 +47,20 @@ to ~/.profile
     ln -s /Applications/Xcode.app/Contents/Applications/Application\ Loader.app/Contents/itms/ /usr/local/itms
 
 
+#### Resize disk
+
+You can resize a disk via CLI.
+
+First you need to find out disk name via:
+```bash
+diskutil list
+```
+and then you can resize it to maximum size via:
+```bash
+sudo diskutil resizeVolume disk0s2 R
+```
+where `disk0s2` is disk you want to resize.
+
 ### Setting up Titanium/Appcelerator
 
 1.) Install pre-requirements:
