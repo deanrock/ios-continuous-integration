@@ -4,7 +4,7 @@ Scripts for setting up and running iOS continuous integration machine (with supp
 
 ###Set-up
 
-1.) install OS X El Capitan & Xcode 7
+1.) install OS X El Capitan
 
 2.) enable SSH server
 
@@ -19,7 +19,13 @@ Scripts for setting up and running iOS continuous integration machine (with supp
     PasswordAuthentication no
     kbdInteractiveAuthentication no
 
-5.) install packages by typing:
+5.) install Xcode 7 or Xcode 8
+
+You can found download links on http://stackoverflow.com/a/10335943/1994837. Links on that page will redirect you to developer.apple.com, where you need to login, and then you will be redirected to file to download. You can get `curl` command for that URL (including authentication headers) by opening Developer Tools in Chrome, right clicking on that network request and selecting `Copy as cURL`.
+
+Copy cURL command to SSH session and add `-O`, to download it to a file in current directory.
+
+6.) install packages by typing:
 
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     sudo gem install cocoapods -v 0.39.0
@@ -35,14 +41,14 @@ Scripts for setting up and running iOS continuous integration machine (with supp
     sudo installer -pkg ./Carthage.pkg -target /
     rm "Carthage.pkg"
 
-6.) add:
+7.) add:
 
     export LANG=en_US.UTF-8
 
 to ~/.profile
 
 
-7.) Symlink itms for altool:
+8.) Symlink itms for altool:
 
     ln -s /Applications/Xcode.app/Contents/Applications/Application\ Loader.app/Contents/itms/ /usr/local/itms
 
